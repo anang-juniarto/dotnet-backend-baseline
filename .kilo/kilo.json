@@ -1,0 +1,8 @@
+{
+  "$schema": "https://app.kilo.ai/config.json",
+  "default_agent": "team-lead",
+  "compaction": {
+    "auto": true,
+    "prune": true
+  }
+}
