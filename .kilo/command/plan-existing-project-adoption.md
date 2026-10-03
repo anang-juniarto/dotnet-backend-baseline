@@ -11,6 +11,13 @@ Perform a read-only assessment of an active repository and generate a structured
 ## Source-Only Lifecycle & Scope
 Follow `docs/adoption/ai-implementation-workflow.md` and `BASELINE.md`; default to `core-reference`, or `full-reference` only when requested. Both exclude `docs/adoption/` and `.kilo/command/plan-new-project-adoption.md`, `.kilo/command/plan-existing-project-adoption.md`, and `.kilo/command/implement-approved-adoption.md` from copying; retain source assets. Enumerate exact permanent destination paths, adapting README/index/manifest and permanent references to avoid missing local adoption links. Permanent fallback is `AGENTS.md` section 2. Record approved-effective settings, preserving existing `default_agent` and approved collision renames. List legacy cleanup separately by exact file path, with explicit approval decisions, baseline provenance/version, content comparison/state, customization/worktree findings, and reference adaptations. Names alone do not prove ownership. Plan permanent verification → approved cleanup after immediate ownership/drift rechecks → final link/discovery verification. Preserve user-owned/customized/uncertain files and report conflicts; never plan recursive deletion of unverified folders. No destination means no cleanup; planning is read-only.
 
+## Exact-File Safety Contract
+Apply `BASELINE.md` canonical exclusions to both source and mapped destination paths, including `.git` file/directory/nested metadata and `.kilo/plans/`; renaming cannot bypass them. Inventory excluded/deferred candidates and reasons. Existing excluded target files are preserved, not cleanup candidates by default; later separately authorized target generation is distinct from import.
+
+Normalize source/target roots; reject equality and ancestor/descendant overlap, verify aliases/junctions where possible, and block uncertain paths. Do not automatically follow links/reparse points. Check containment/traversal and duplicate destinations. Enumerate each exact file's concrete need, scope basis and source/target state before approval. No bulk recursive copy/mirror or unlisted writes. Plan pre-write drift/exclusion/dependency rechecks, selected-tree link/anchor/discovery validation and an actual-change-to-manifest audit. Scope changes/new conflicts require renewed approval; no automatic rollback on failure.
+
+Record README/CHANGELOG preservation, optional target-compatible CONTRIBUTING merge, and adapted BASELINE/index routes. Read LICENSE; approve an exact attribution location retaining the full MIT notice while preserving the target root license and application licensing. Unresolved attribution is `CONFLICT`/`DEFER` before related transfer.
+
 ## Workflow
 1. **Target Verification & Pre-Flight (Read-Only)**:
    - Verify the target repository root path is an absolute path.
@@ -20,7 +27,7 @@ Follow `docs/adoption/ai-implementation-workflow.md` and `BASELINE.md`; default 
    - Stage 2: Read target manifests to establish target framework, installed packages, and project references.
    - Stage 3: Read collision files only (e.g. existing `AGENTS.md` or `.kilo/kilo.json`). Do NOT recursively load entire source or documentation trees.
 3. **Classify Actions & Identify Collisions**:
-   - `ADD`: Missing baseline file safe to introduce (e.g. `docs/standards/`, `docs/repository-profile-template.md`).
+   - `ADD`: Missing baseline file safe to introduce (e.g. `docs/standards/README.md`, `docs/repository-profile-template.md`).
    - `MERGE`: Existing file requiring reconciliation (`AGENTS.md` gets baseline reference block; `kilo.json` gets missing compaction/default_agent).
    - `SKIP`: Target has an authoritative equivalent (e.g. active `README.md`, existing CI definitions).
    - `CONFLICT`: Agent, command, or standard collision with differing content requiring user decision.

@@ -9,6 +9,10 @@ This source-only playbook follows the [canonical lifecycle](./ai-implementation-
 
 ---
 
+Both project types default to `core-reference`; `full-reference` is explicit opt-in, still requiring an exact-file allowlist. Follow [BASELINE.md](../../BASELINE.md) for canonical exclusions on source and mapped destination paths, root-document preservation and attribution. Never bulk recursively copy/mirror directories; unselected `.kilo/` content cannot transfer. Exclusion is not deletion, and later separately authorized target generation is not source import.
+
+Normalize physical roots, reject equality/ancestor overlap and block unresolved aliases/junctions; do not automatically follow links/reparse points. Check containment, traversal, duplicate destinations, recorded source/target drift and dependency closure. Record each file's need/scope basis and excluded/deferred inventory. Read LICENSE and approve an exact attribution location retaining its full MIT notice without replacing the target root license. Preserve README identity, CHANGELOG history and optional target-compatible CONTRIBUTING. Unresolved attribution means CONFLICT/DEFER before related transfer.
+
 ## 1. Safety Principles & Pre-Flight Checks
 
 1. **Clean or Understood Worktree**: Inspect `git status` to understand existing working-tree changes. Adoption commands preserve unrelated changes and do NOT run Git operations automatically.
@@ -32,7 +36,7 @@ Execute the planning command from this baseline workspace:
    - Identifies active contracts, runtime version, and dependencies.
 2. **Classification Output**:
    Produces an actionable adoption plan following [`adoption-plan-template.md`](./adoption-plan-template.md):
-   - `ADD`: Missing artifact that is safe to add (e.g. `docs/standards/`, `docs/repository-profile-template.md`).
+   - `ADD`: Missing artifact that is safe to add (e.g. `docs/standards/README.md`, `docs/repository-profile-template.md`).
    - `MERGE`: Existing file that requires reconciliation (e.g. `AGENTS.md`, `.kilo/kilo.json`).
    - `SKIP`: Target already has an authoritative equivalent (e.g. active `README.md`, existing CI pipelines).
    - `CONFLICT`: Agent, command, or standard collision with differing content requiring user direction.
@@ -64,12 +68,12 @@ Once the plan has been inspected and decisions approved, execute the implementat
    - Merges root `AGENTS.md` (injecting universal guardrails while preserving all project-specific rules).
    - Merges `.kilo/kilo.json` without overriding project-specific tools or permissions.
    - Adds approved agents and non-adoption commands only, with collision renames applied; validates approved-effective `default_agent` rather than overriding existing settings.
-   - Copies universal standards to `docs/standards/`.
+   - Adds/merges individually approved standards files under `docs/standards/`.
    - Initializes a missing approved `docs/repository-profile.md` from the profile template as `Draft`; preserves and reconciles existing verified profile content.
 3. **Verification**:
-   - Runs Kilo agent validation in the target environment.
-   - Verifies relative markdown link resolution.
-   - Does NOT run destructive commands or migrations.
+   - Audits actual changes against the approved manifest; unlisted changes stop dependent cleanup.
+   - Verifies approved agent/command discovery and links/anchors against the selected destination tree, adapting absent topic/adoption routes while retaining AGENTS fallback.
+   - Reports executed and unexecuted checks accurately. Drift, scope changes or new conflicts require renewed approval; no automatic rollback or destructive cleanup on failure.
 
 ---
 
@@ -81,13 +85,9 @@ cd C:\Projects\ExistingApi
 ```
 1. Open `docs/repository-profile.md` and record verified project facts from manifests.
 2. Follow [`post-adoption-checklist.md`](./post-adoption-checklist.md) to confirm complete verification.
-3. Run the project's standard build and test suites:
+3. Run only discovered applicable and authorized build/test commands; these are illustrative:
    ```powershell
    dotnet build
    dotnet test
    ```
-4. If authorized by team workflow, stage only the reviewed baseline files (avoid broad `git add .`):
-   ```powershell
-   git add AGENTS.md .kilo/ docs/standards/ docs/repository-profile.md
-   git commit -m "chore(governance): adopt universal backend engineering baseline"
-   ```
+4. Adoption itself performs no Git mutations. Any later staging/commit requires separate explicit authorization and exact reviewed file paths, not broad directory staging.

@@ -8,22 +8,40 @@
 
 - **Destination root**: `<verified absolute path distinct from source/deployment; none means no mutation>`
 - **Baseline source root/version/state**: `<absolute path, version, recorded revision/content evidence>`
-- **Mode/scope**: `<new: full-reference | existing: core-reference; explicit override>`
+- **Mode/scope**: `<new or existing: core-reference by default; full-reference only by explicit choice>`
+- **Path safety evidence**: `<normalized physical roots; no equality/ancestor overlap; alias/junction resolution; no automatic link/reparse traversal; uncertain paths block writes>`
+- **Mapping audit**: `<source/destination containment, traversal rejection, canonical exclusions on both sides, duplicate destination checks using target filesystem semantics>`
 - **Verified profile**: `<runtime, manifests, solution/projects, architecture, schema ownership; unknowns remain explicit>`
 - **Existing instructions/configuration/worktree**: `<paths, effective settings, unrelated changes to preserve>`
 - **Approved-effective settings**: `<default_agent, compaction, agent/command identifiers including collision renames; preserve existing settings unless explicitly approved>`
 
 ## 2. Permanent Action Manifest
 
-Expand every row to exact source and destination file paths before approval; directory wildcards are not execution authorization.
+Expand every row to exact source and destination file paths before approval. Filter [canonical exclusions](../../BASELINE.md#universal-exclusions) first on both mappings; renaming cannot bypass them. Directory names/globs are discovery candidates, never bulk recursive copy/mirror authorization. Unlisted files cannot transfer or be changed.
 
-| Action | Source file | Exact destination file | Recorded source/target state | Merge/adaptation | Approval/decision |
-|---|---|---|---|---|---|
-| `ADD / MERGE / SKIP / CONFLICT / DEFER` | `<file>` | `<absolute file>` | `<content comparison/hash/revision, absent if new>` | `<preserve custom content; proposed change>` | `<explicit decision>` |
+| Action | Source file | Exact destination file | Need / scope basis | Recorded source/target state | Merge/adaptation | Approval/decision |
+|---|---|---|---|---|---|---|
+| `ADD / MERGE / SKIP / CONFLICT / DEFER` | `<exact file or template for approved generation>` | `<absolute file>` | `<concrete need; core or explicit full>` | `<content comparison/hash/revision, absent if new>` | `<preserve custom content; proposed change>` | `<explicit decision>` |
+
+### Root Documents & License Decisions
+
+| Artifact | Target preservation / approved adaptation | Exact manifest destination / decision |
+|---|---|---|
+| README | Preserve target identity; never raw baseline identity | `<SKIP or approved target-specific merge>` |
+| CHANGELOG | Preserve application history; no baseline release-history import | `<SKIP; baseline identity via .baseline-version/manifest>` |
+| CONTRIBUTING | Optional target-compatible workflow only | `<SKIP or approved merge>` |
+| BASELINE / indexes | Adapt to selected tree, removing missing adoption/topic routes | `<exact files and adaptations>` |
+| LICENSE / attribution | Read source MIT terms; preserve full copyright/permission notice and disclaimer; preserve target root license without relicensing application | `<exact approved attribution file; unresolved = CONFLICT/DEFER before related transfer>` |
 
 Include selected permanent config, agents, non-adoption commands, standards, scope-specific documents, and profile initialization/merge. Specify destination README/index/BASELINE adaptations and permanent agent/command routing changes to remove links and dependencies on excluded adoption assets. Preserve authoritative destination gateways; do not mark a needed adaptation `SKIP` and then edit it. Use `AGENTS.md` section 2 for permanent capability fallback.
 
-## 3. Source-Only Inventory & Exact Cleanup List
+## 3. Excluded/Deferred Inventory & Exact Cleanup List
+
+| Exact candidate source / mapped destination | Classification | Reason / canonical exclusion | Existing target disposition |
+|---|---|---|---|
+| `<file; excluded tree inventory may group non-traversed paths with reason>` | `<SOURCE-ONLY / EXCLUDED / DEFER>` | `<BASELINE rule or missing need/evidence>` | `<preserve; not imported, not deletion authorization>` |
+
+Record `.git` file/directory/nested metadata, `.kilo/plans/`, state/cache/build outputs, unselected `.kilo/` files, secrets/local config and deferred fixtures under the canonical policy. Later separately authorized target generation is not source import. Keep core blueprints as selected references; do not auto-create ADR/spec/release instances.
 
 **Never copy to a new destination:** every file under source `docs/adoption/`, plus source `.kilo/command/plan-new-project-adoption.md`, `.kilo/command/plan-existing-project-adoption.md`, and `.kilo/command/implement-approved-adoption.md`. Inventory these files as `SOURCE-ONLY`, retaining all source assets and source links. Apply universal exclusions from [BASELINE.md](../../BASELINE.md) in both scopes.
 
@@ -41,9 +59,9 @@ Record user approval of the exact plan, source/destination, scope, permanent mer
 
 ## 5. Ordered Verification & Reporting Plan
 
-1. Recheck source and target against recorded state before permanent edits; drift requires refreshed approval.
-2. Apply approved permanent changes, then verify effective configuration syntax/values, approved agent and non-adoption command discovery, Markdown paths/anchors, and AGENTS section 2 fallback. Inspect all references to cleanup candidates before deletion.
-3. Only on successful pre-cleanup verification, recheck each approved cleanup file's ownership/content/customization evidence immediately before exact-file removal. Verification failure or uncertainty means retain and report partial/conflict, not recursive deletion.
+1. Re-review older plans; recheck roots/overlap, containment, exclusions on both mappings, duplicate destinations, attribution, dependency closure and recorded source/target state before edits. Drift, scope changes or new conflicts require refreshed approval.
+2. Apply only exact approved permanent changes (no recursive copy/mirror), audit actual changes against the manifest, then verify effective configuration syntax/values, approved agent and non-adoption command discovery, Markdown paths/anchors, and AGENTS section 2 fallback. Inspect all references to cleanup candidates before deletion.
+3. Only on successful pre-cleanup verification, recheck each approved cleanup file's ownership/content/customization evidence immediately before exact-file removal. Verification failure or uncertainty means retain and report partial/conflict, not recursive deletion or automatic rollback. Existing excluded target files are not a failure if adoption did not import/change them.
 4. Repeat link/anchor, discovery, and configuration verification against the actual post-cleanup tree. Ensure README/index/manifest and other permanent artifacts do not require missing local adoption assets. Keep baseline source assets intact.
 5. Execute discovered destination build/test/lint commands only where applicable and authorized; report unexecuted checks and reasons. Use the [source checklist](./post-adoption-checklist.md), not a destination adoption dependency.
 6. Report `Implemented / Partially implemented / Blocked`, exact files added/merged/preserved/removed/already absent/conflicted, validation results, and remaining risks.

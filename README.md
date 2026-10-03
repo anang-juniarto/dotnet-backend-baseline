@@ -7,6 +7,8 @@
 
 **Source-only adoption:** Keep `docs/adoption/` and the three adoption commands in this baseline, not in new destinations. Follow the [canonical lifecycle](./docs/adoption/ai-implementation-workflow.md) for approved, ownership/drift-checked legacy cleanup after verification. Adapt destination README/index/manifest copies to omit missing local adoption links; retain these links in source. Permanent capability fallback is in `AGENTS.md` section 2.
 
+**Minimal adoption default:** New and existing projects both use `core-reference`; `full-reference` is explicit opt-in. [BASELINE.md](./BASELINE.md) is the canonical exact-file allowlist/exclusion policy: no bulk recursive copy/mirror, no Git metadata or plan/state payload import, and no unlisted files. Preserve destination README identity, application CHANGELOG history and root license; optional CONTRIBUTING changes must fit the target workflow. Retain the MIT notice at an approved attribution location. Plans verify path overlap, containment, drift, duplicate mappings and dependency closure, then audit actual changes against the manifest. Exclusions do not delete existing target artifacts; later authorized generation is separate. Older plans require re-review, not automatic target migration.
+
 Welcome to the universal backend engineering baseline. This repository provides a portable, token-efficient foundation for enterprise backend services, multi-agent AI orchestration, and software governance.
 
 ---

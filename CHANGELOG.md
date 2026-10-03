@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
+- Defaulted both new and existing adoption to `core-reference`; `full-reference` remains explicit opt-in with exact-file approval, never bulk recursive copy/mirror.
+- Centralized source/destination exclusions including Git metadata and plans, root-document/license preservation and MIT attribution; distinguished source import from later authorized target generation.
+- Required normalized non-overlapping roots, containment/duplicate/drift checks, selected-tree dependency validation and actual-change-to-manifest audits. Older plans require re-review; no automatic target migration or cleanup.
 - Aligned engineering workflows and agents with simple-first implementation, risk-based specifications/reviews, and removal of unnecessary boilerplate.
 - Required same-change maintenance of affected repository-owned documentation and concise XML documentation for touched handwritten classes, actions, properties, and fields.
 - Kept adoption guides and commands source-only, with approved ownership/drift-checked cleanup and final verification for existing destinations.

@@ -8,6 +8,16 @@ Read this source-only checklist from the baseline workspace, not a required dest
 
 ---
 
+## 0. Scope, Allowlist & Preservation Audit
+
+- [ ] **Default & Approval**: Both new and existing default to `core-reference`; full is explicit opt-in. Older plans were re-reviewed under current policy. Every write has an approved exact-file ADD/MERGE entry with need, scope basis and source/target state; no directory/glob authorization, bulk recursive copy or mirror.
+- [ ] **Path Safety**: Verified normalized physical roots do not overlap (equal/ancestor/descendant); aliases/junctions are resolved or blocked. No automatic link/reparse traversal. All mappings satisfy containment, reject traversal and duplicate destinations under target filesystem semantics.
+- [ ] **Exclusions & Drift**: [Canonical exclusions](../../BASELINE.md#universal-exclusions) were checked against source and mapped destinations before approval and writes, including `.git` file/directory/nested metadata and `.kilo/plans/`. Renames do not bypass them. Source/target drift, scope changes and new conflicts require renewed approval.
+- [ ] **Manifest Audit**: Compare actual added/modified files against approved manifest entries, including profile generation, attribution and link adaptations; investigate mismatches before cleanup. Inventory excluded/deferred candidates with reasons. Unlisted `.kilo/` files and secrets/local config were not imported.
+- [ ] **Root Documents & License**: README identity, application CHANGELOG history, target workflow and root license are preserved. Optional CONTRIBUTING changes are approved. Source LICENSE was read and its full MIT notice retained at the exact approved attribution location; unresolved decisions block related transfer. No application-wide relicensing is implied.
+- [ ] **Import vs Generation**: No excluded source payload was transferred. Existing target caches/plans/endpoint docs are not failures and are not deleted due to exclusion. Later separately authorized target generation is distinct from import; no implicit ADR/spec/release instances.
+- [ ] **Dependency Closure**: Simulate the selected core/full destination tree before writes and check actual final links/anchors/discovery afterward. Optional topic/adoption routes are adapted without unnecessary imports; permanent AGENTS fallback and selected Graphify command/helper/docs dependencies remain coherent.
+
 ## 1. Kilo Configuration & Tooling Verification
 
 - [ ] **Valid Kilo JSON**: Verify `.kilo/kilo.json` parses cleanly without syntax errors:
@@ -37,7 +47,7 @@ Read this source-only checklist from the baseline workspace, not a required dest
 
 ## 2. Documentation & Profile Verification
 
-- [ ] **Repository Profile Created**: Confirm `docs/repository-profile.md` exists and is populated with verified facts:
+- [ ] **Approved Repository Profile**: If initialization/merge was approved, confirm `docs/repository-profile.md` matches that action; unknown facts remain Draft rather than invented. Verify applicable facts:
   - Runtime and SDK versions match installed environment.
   - Active solution and project paths match filesystem.
   - Verified architectural pattern is recorded.
@@ -57,11 +67,11 @@ Read this source-only checklist from the baseline workspace, not a required dest
 
 ## 4. Environment & Execution Safety
 
-- [ ] **Clean Worktree**: Check git status to ensure only intended baseline files were staged or committed:
+- [ ] **Worktree Audit**: Check read-only git status/diff against the manifest and initial user changes; adoption does not stage or commit files:
   ```powershell
   git status
   ```
-- [ ] **Restore & Build Verification**: Execute the project's authorized build commands:
+- [ ] **Restore & Build Verification**: Execute only discovered, applicable and separately authorized target commands. The following are illustrative, not baseline validation or permission for network restore:
   ```powershell
   dotnet restore
   dotnet build --no-restore
@@ -71,4 +81,4 @@ Read this source-only checklist from the baseline workspace, not a required dest
   dotnet test --no-build
   ```
 - [ ] **No Secret Leaks**: Verify that no connection strings, tokens, or environment passwords were committed in configuration files.
-- [ ] **Truthful Reporting**: Record any unexecuted checks or missing tooling with concrete rationale in the initial adoption commit message or PR description.
+- [ ] **Truthful Reporting**: Report exact changed/preserved/removed/conflicted files, executed results, unexecuted checks and reasons, and remaining concerns. No automatic rollback or destructive cleanup on failure. No commit/PR is required or authorized by this checklist.

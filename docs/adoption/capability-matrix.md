@@ -4,13 +4,13 @@
 > **Status:** Normative Specification  
 > **Authority:** Establishes feature availability and deterministic fallbacks across adoption scopes.
 
-This matrix ensures that every engineering capability in the baseline remains fully functional whether adopted into a greenfield repository (`full-reference` scope) or merged incrementally into an existing codebase (`core-reference` scope).
+Both new and existing projects default to `core-reference`; `full-reference` is explicit opt-in for either. Capability parity depends on selecting coherent permanent agent/command/standard dependencies by exact-file approval, not copying directories. Optional topic files below are candidates, not guaranteed imports; use fallback whenever absent. Core blueprints remain reusable references, not automatically generated instances.
 
 ---
 
 ## 1. Capability Availability Across Scopes
 
-| Engineering Capability | Greenfield (`full-reference`) | Brownfield (`core-reference`) | Fallback When Profile Docs Are Absent |
+| Engineering Capability | Explicit `full-reference` (when topic files selected) | Default `core-reference` (new and existing) | Fallback When Profile Docs Are Absent |
 |---|---|---|---|
 | **AI Multi-Agent Orchestration** | Supported (`.kilo/agent/`) | Supported (`.kilo/agent/`) | No fallback needed; agents are core. |
 | **System Analysis & Feature Specs** | Supported (`feature-spec-template.md`) | Supported (`feature-spec-template.md`) | Inlined minimal change contract. |

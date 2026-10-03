@@ -10,11 +10,13 @@ This source-only directory provides adoption playbooks and checklists. It and `.
 
 ## 1. Playbook Selection
 
+Both new and existing projects default to `core-reference`. `full-reference` is explicit opt-in, not a bulk folder transfer. [BASELINE.md](../../BASELINE.md) defines canonical exclusions and root-document/license preservation. Every imported/adapted file requires an exact approved source/destination mapping with need, scope basis and state; no recursive copy/mirror. Preserve target identity/history/root license and retain the source MIT notice at an approved attribution location. Unresolved path overlap/aliases, drift, duplicate destinations or attribution block dependent writes. Audit actual changes and selected-tree links/discovery; exclusions do not delete existing target files or prohibit separately authorized later generation.
+
 Choose the playbook that matches your adoption target:
 
 | Target Context | Playbook | Planning Command | Implementation Command | Recommended Scope |
 |---|---|---|---|---|
-| **Greenfield / New Project** | [`new-project.md`](./new-project.md) | `/plan-new-project-adoption` | `/implement-approved-adoption` | `full-reference` |
+| **Greenfield / New Project** | [`new-project.md`](./new-project.md) | `/plan-new-project-adoption` | `/implement-approved-adoption` | `core-reference` |
 | **Brownfield / Existing Project** | [`existing-project.md`](./existing-project.md) | `/plan-existing-project-adoption` | `/implement-approved-adoption` | `core-reference` |
 
 ---
