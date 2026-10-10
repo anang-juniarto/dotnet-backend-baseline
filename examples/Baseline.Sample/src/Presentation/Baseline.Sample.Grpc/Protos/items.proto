@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option csharp_namespace = "Baseline.Sample.Grpc.Contracts";
+
+package baseline.sample.items.v1;
+
+service Items {
+  rpc Get (GetItemRequest) returns (ItemReply);
+  rpc Create (CreateItemRequest) returns (ItemReply);
+}
+
+message GetItemRequest {
+  string id = 1;
+}
+
+message CreateItemRequest {
+  string name = 1;
+}
+
+message ItemReply {
+  string id = 1;
+  string name = 2;
+}

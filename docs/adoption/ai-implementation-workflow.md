@@ -21,7 +21,11 @@
 - Preserve customized, user-owned, drifted, or uncertain files as conflicts. Do not propose recursive deletion of unverified folders.
 - Specify adaptations to permanent destination README files, documentation index, manifest, agents, and commands so they do not depend on missing local adoption files. Remove destination-only adoption links/routes or replace them with verified accessible source references. Retain source baseline links unchanged.
 - Permanent fallback belongs in destination `AGENTS.md` section 2: verified profiles → manifests/source → applicable universal standards. No destination capability-matrix dependency.
-- Record approved-effective configuration, including preserved or renamed agents and `default_agent`, without forcing baseline defaults over existing settings. Emit the plan and halt without target mutation.
+- Record approved-effective configuration, including preserved or renamed agents and `default_agent`, without forcing baseline defaults over existing settings.
+- Separate reference scope from application selection and choose new reference/generation or existing reference/capability/migration mode. Reference-only never converts runtime/architecture. New separately approved generation defaults to .NET 10 Core Domain/Application MediatR feature slices, modular Infrastructure provider/capability assemblies, Presentation WebApi controllers (optional Grpc), and Unit/Integration/Architecture tests; preserve verified brownfield boundaries until a separate migration approves change.
+- Record every optional selection and dependency using the [capability matrix](./capability-matrix.md), including independent SignalR/chat/inbox/web/mobile push choices. All integrations default off; record versions/licenses and proposed versus tested evidence. `full-reference` does not select runtime stacks.
+- Separate exact reference-import rows from target-generated/modified rows and their execution approvals. Source `examples/**`, including `examples/Baseline.Sample`, is excluded in both scopes; reviewed blueprints may inform separately approved generation, never recursive source copy. Client/device/account work is separately scoped.
+- Emit the plan and halt without target mutation.
 
 ### Phase C: Human Review & Approval
 - Require explicit approval of the concrete plan, destination, scope, merge decisions, and each cleanup path before implementation. An `approved=true` argument alone is not evidence of approval of unspecified deletions.
@@ -32,7 +36,8 @@
 - Approval covers exact files only, including adaptations and profile initialization. Never perform recursive copy, mirror, or unlisted writes.
 - Apply approved permanent additions/merges one file at a time using normal tools, preserving target rules, permissions, custom tools, MCPs, and user changes.
 - Initialize a missing approved repository profile as Draft; merge rather than overwrite an existing profile. Adapt destination gateways and references before cleanup.
-- Do not copy source-only assets. Do not commit, install packages, migrate databases, or run external tooling without appropriate separate authorization.
+- Do not copy source-only assets or examples. Generate executable artifacts only under their separately approved exact manifest; no automatic runtime/architecture conversion. Implement selected store/identity before dependent chat/inbox, then realtime/push dispatch and approved scale-out; omit unselected modules entirely. Preserve existing integrations rather than silently replacing them.
+- Do not commit, install packages, migrate databases, start services or run external tooling without appropriate separate authorization.
 
 ### Phase E: Verification, Authorized Cleanup & Final Reporting
 1. Compare actual added/modified files against approved `ADD`/`MERGE` entries, including attribution and generated profiles; report any mismatch and stop dependent cleanup. Preserve unlisted files and pre-existing excluded artifacts. Verify links/anchors and dependency closure against the selected core/full destination tree, adapting optional topic routes to AGENTS fallback rather than importing unnecessary files. Verify permanent artifacts first: effective configuration syntax and approved values, agent/command discovery, permanent fallback, and reference integrity. Resolve dependencies on cleanup candidates before removing any candidate. Use [the source checklist](./post-adoption-checklist.md).

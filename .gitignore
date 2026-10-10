@@ -1,1 +1,12 @@
 .kilo/plans
+
+# Executable example and local verification outputs.
+**/bin/
+**/obj/
+**/TestResults/
+examples/Baseline.Sample/artifacts/
+**/coverage/
+**/graphify-out/
+.vs/
+*.user
+*.suo

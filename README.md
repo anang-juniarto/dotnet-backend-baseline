@@ -2,16 +2,26 @@
 
 > **Repository Type:** Portable AI engineering reference baseline  
 > **Baseline Version:** `2.0.0` (see [`BASELINE.md`](./BASELINE.md))  
-> **Executable Application:** No (governance, standards, agent configuration, and blueprints)  
+> **Reference Assets:** Non-executable governance, standards, agent configuration, and blueprints
+> **Optional Executable Example:** `examples/Baseline.Sample` — isolated local in-memory demo; no external stack certified
 > **Adoption Lifecycle:** AI-Assisted Plan $\rightarrow$ Review $\rightarrow$ Implement ([`docs/adoption/ai-implementation-workflow.md`](./docs/adoption/ai-implementation-workflow.md))
 
 **Source-only adoption:** Keep `docs/adoption/` and the three adoption commands in this baseline, not in new destinations. Follow the [canonical lifecycle](./docs/adoption/ai-implementation-workflow.md) for approved, ownership/drift-checked legacy cleanup after verification. Adapt destination README/index/manifest copies to omit missing local adoption links; retain these links in source. Permanent capability fallback is in `AGENTS.md` section 2.
 
 **Minimal adoption default:** New and existing projects both use `core-reference`; `full-reference` is explicit opt-in. [BASELINE.md](./BASELINE.md) is the canonical exact-file allowlist/exclusion policy: no bulk recursive copy/mirror, no Git metadata or plan/state payload import, and no unlisted files. Preserve destination README identity, application CHANGELOG history and root license; optional CONTRIBUTING changes must fit the target workflow. Retain the MIT notice at an approved attribution location. Plans verify path overlap, containment, drift, duplicate mappings and dependency closure, then audit actual changes against the manifest. Exclusions do not delete existing target artifacts; later authorized generation is separate. Older plans require re-review, not automatic target migration.
 
-Welcome to the universal backend engineering baseline. This repository provides a portable, token-efficient foundation for enterprise backend services, multi-agent AI orchestration, and software governance.
+This portable reference defaults approved greenfield applications to **.NET 10, Clean Architecture and MediatR CQRS**, using `src/Core` (Domain/Application), modular provider/capability assemblies under `src/Infrastructure`, and `src/Presentation` (WebApi and separately selected Grpc). The [canonical selectable schema](./docs/architecture/repository-map.md) follows the user-owned `gemini-code-1791622287764.txt`; it is a blueprint, not a claim that all modules exist. Start with the [greenfield profile](./docs/architecture/net10-baseline-profile.md), then select only needed capabilities from the [optional-stack catalog](./docs/architecture/optional-stack-catalog.md). Reference scope (`core-reference` by default) is separate from runtime capability selection.
+
+Brownfield reference-only adoption preserves the discovered runtime, architecture, API contracts and packages. Selected-capability additions and incremental migrations require their own approval; missing topic documents retain the `AGENTS.md` discovery fallback. The optional sample demonstrates local in-memory use cases plus compiled modular provider/capability adapters and separate gRPC/realtime transports. Its [verification record](./examples/Baseline.Sample/docs/repository-profile.md) distinguishes unit/in-process/architecture and configuration checks from certification; passing tests do not certify live provider delivery, durable chat/inbox/push or production deployment. Kubernetes, Helm and cloud deployment are not mandatory. `examples/**` is excluded from baseline source transfer; executable target generation requires a separate exact-file manifest.
 
 ---
+
+## Choose an entry point
+
+- **Run the example:** [five sample profiles](./examples/Baseline.Sample/README.md), beginning with memory-only. Relational profiles require separately provisioned schema and are not certified database quick-starts.
+- **Create a new target:** [new-project adoption](./docs/adoption/new-project.md) → approved exact-file generation → target verification.
+- **Adopt into an existing target:** [existing-project adoption](./docs/adoption/existing-project.md), preserving runtime/contracts by default.
+- **Maintain this baseline:** [contribution checks](./CONTRIBUTING.md#3-verification--testing) and the [root validation workflow](./.github/workflows/baseline-validation.yml). GitHub-run results must be distinguished from local verification.
 
 ## 1. Quick-Start Discovery Checklist
 

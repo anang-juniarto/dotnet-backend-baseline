@@ -21,7 +21,16 @@ Choose the playbook that matches your adoption target:
 
 ---
 
-## 2. Supporting Adoption Governance
+## 2. Profile, Mode & Capability Selection
+
+Reference scope and executable stack selection are independent approval axes. `full-reference` does not enable integrations; selecting a stack does not authorize importing whole topic folders. Reference adoption alone never generates an application.
+
+- **New target:** separately approved generation defaults to .NET 10, Core Domain/Application MediatR CQRS feature slices, modular Infrastructure provider/capability assemblies, and Presentation WebApi controllers (optional Grpc), with Unit/Integration/Architecture test projects. Selected hosts own composition-root wiring; no separate read database, event sourcing or speculative wrappers are required.
+- **Existing target:** choose `existing-reference` (guidance only), `existing-capabilities` (selected adapters within current boundaries), or `existing-migration` (separately approved incremental runtime/architecture migration). Preserve verified runtime, contracts, schemas and tooling unless the exact migration approves changes.
+- **Optional stacks:** use the [capability matrix](./capability-matrix.md) and [catalog](../architecture/optional-stack-catalog.md). All integrations default off; include only approved dependencies and their acceptance checks. Document proposed versus verified evidence.
+- **Source examples:** `examples/**`, including `examples/Baseline.Sample`, never transfer as reference payload in either scope. A separately approved exact generated-file manifest may use a reviewed blueprint, not recursive source copying. The isolated in-memory sample is not external-integration certification.
+
+## 3. Supporting Adoption Governance
 
 - **AI Implementation Lifecycle**: [`ai-implementation-workflow.md`](./ai-implementation-workflow.md)  
   *5-phase transparent adoption lifecycle (Discovery -> Planning -> Review -> Implementation -> Verification).*
@@ -38,7 +47,7 @@ Choose the playbook that matches your adoption target:
 
 ---
 
-## 3. Core Precedence Rules
+## 4. Core Precedence Rules
 
 1. **Target Authority Wins**: Never allow generic baseline templates to overwrite active published contracts, live schemas, or existing build/test scripts.
 2. **Plan Before Implementation**: Adoption always starts with a read-only planning phase (`/plan-*`) before any target files are touched. Implementation requires explicit user approval.

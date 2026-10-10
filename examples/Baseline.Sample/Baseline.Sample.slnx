@@ -1,0 +1,28 @@
+<Solution>
+  <Folder Name="/src/Core/">
+    <Project Path="src/Core/Baseline.Sample.Domain/Baseline.Sample.Domain.csproj" />
+    <Project Path="src/Core/Baseline.Sample.Application/Baseline.Sample.Application.csproj" />
+  </Folder>
+  <Folder Name="/src/Infrastructure/">
+    <Project Path="src/Infrastructure/Baseline.Sample.Persistence.InMemory/Baseline.Sample.Persistence.InMemory.csproj" />
+    <Project Path="src/Infrastructure/Baseline.Sample.Persistence.EntityFramework/Baseline.Sample.Persistence.EntityFramework.csproj" />
+    <Project Path="src/Infrastructure/Baseline.Sample.Persistence.SqlServer/Baseline.Sample.Persistence.SqlServer.csproj" />
+    <Project Path="src/Infrastructure/Baseline.Sample.Persistence.PostgreSql/Baseline.Sample.Persistence.PostgreSql.csproj" />
+    <Project Path="src/Infrastructure/Baseline.Sample.Persistence.MongoDb/Baseline.Sample.Persistence.MongoDb.csproj" />
+    <Project Path="src/Infrastructure/Baseline.Sample.Infrastructure.Caching/Baseline.Sample.Infrastructure.Caching.csproj" />
+    <Project Path="src/Infrastructure/Baseline.Sample.Infrastructure.Search/Baseline.Sample.Infrastructure.Search.csproj" />
+    <Project Path="src/Infrastructure/Baseline.Sample.Infrastructure.Messaging/Baseline.Sample.Infrastructure.Messaging.csproj" />
+    <Project Path="src/Infrastructure/Baseline.Sample.Infrastructure.BackgroundJobs/Baseline.Sample.Infrastructure.BackgroundJobs.csproj" />
+    <Project Path="src/Infrastructure/Baseline.Sample.Infrastructure.Observability/Baseline.Sample.Infrastructure.Observability.csproj" />
+  </Folder>
+  <Folder Name="/src/Presentation/">
+    <Project Path="src/Presentation/Baseline.Sample.WebApi/Baseline.Sample.WebApi.csproj" />
+    <Project Path="src/Presentation/Baseline.Sample.Grpc/Baseline.Sample.Grpc.csproj" />
+    <Project Path="src/Presentation/Baseline.Sample.Realtime/Baseline.Sample.Realtime.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Baseline.Sample.UnitTests/Baseline.Sample.UnitTests.csproj" />
+    <Project Path="tests/Baseline.Sample.IntegrationTests/Baseline.Sample.IntegrationTests.csproj" />
+    <Project Path="tests/Baseline.Sample.ArchitectureTests/Baseline.Sample.ArchitectureTests.csproj" />
+  </Folder>
+</Solution>

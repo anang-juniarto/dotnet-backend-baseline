@@ -1,42 +1,74 @@
-# Schema Change Process & Zero-Downtime Migration Policy
+# Schema Change Process & Compatible Evolution
 
-> **Document Metadata**:  
-> `Status: Draft` | `Owner: Database Engineering Team` | `Last verified: Not verified` | `Evidence: Migration workflow standard`
+> **Status:** Reference guidance | **Owner:** Database Engineering
+> **Last verified:** Not verified | **Evidence:** Release process design, not executed migrations
 
-This document defines the mandatory process for modifying database schemas while ensuring zero-downtime, rolling release safety, and data integrity.
+## Preconditions
 
----
+Declare [schema authority](./schema-ownership.md), selected provider and affected consumers.
+Record exact engine/client versions and the authorized execution environment.
+Inspect existing migrations, deployment hooks and backup procedures before proposing execution.
+This guidance does not authorize database connections, migration execution or destructive work.
+Zero downtime is a validation objective, not a guarantee from an additive-looking script.
+Assess locks, rewrite/build cost, disk headroom and old/new application compatibility.
+Externally managed schemas follow their owner's verified change process.
 
-## 1. Expand-Migrate-Contract Pattern
+## 1. Expand
 
-Destructive schema changes in a single deployment are FORBIDDEN. All changes requiring rolling application compatibility MUST follow the three-phase Expand-Migrate-Contract lifecycle:
+- Add compatible tables, nullable columns, optional document fields or versioned search indexes.
+- Ensure old writers and readers still work, including defaults and validation rules.
+- Add indexes only after checking duplicates, build/locking behavior and resource limits.
+- Separate SQL Server, MySQL and PostgreSQL migration sets and snapshots.
+- Review generated SQL for the exact selected provider; never reuse it blindly elsewhere.
+- Version MongoDB validators/indexes and Elasticsearch mappings under their declared authority.
+- Keep existing search aliases on the serving index until replacement validation succeeds.
 
-```text
-Phase 1: EXPAND          Phase 2: MIGRATE          Phase 3: CONTRACT
-(Additive Schema)      (Data & Dual Write)        (Cleanup Deprecated)
+## 2. Migrate
 
-Add new column/table   Deploy code reading new    Drop old column/table
-Old & new code safe    Backfill historical data   Old readers retired
-```
+- Deploy readers that tolerate the transition and define the authoritative write path.
+- Use dual writes only when necessary, with explicit failure/reconciliation semantics.
+- Keep same-store related changes atomic where required and supported.
+- Do not imply atomicity across stores or a database and Elasticsearch.
+- Backfill in bounded batches with stable ordering, checkpoints and restart-safe predicates.
+- Set retry budgets, concurrency limits, pause controls and progress/failure metrics.
+- Preserve concurrent updates through conditional versions or another verified invariant guard.
+- Avoid long transactions and remote effects inside transactions.
+- Persist required publication/reindex intent durably with state when the store supports it.
+- Reconcile counts, domain invariants and representative records before switching reads.
 
-### Phase 1: Expand (Additive)
-- Add new tables, nullable columns, or backward-compatible indexes.
-- Old versions of the application continue reading/writing without failure.
+## 3. Contract
 
-### Phase 2: Migrate (Transition)
-- Deploy application version that writes to the new schema and falls back to old data if needed.
-- Execute bounded asynchronous backfill scripts for historical records.
+Retire all old application instances, workers, jobs and external readers first.
+Delete obsolete columns/collections/indexes only in a separate approved release.
+Tightening nullability, uniqueness or validators also requires existing-data validation.
+Treat renames as expand/copy/switch/contract when compatibility requires it.
+Search alias cutover must retain a tested rollback/rebuild path before deleting old indexes.
 
-### Phase 3: Contract (Cleanup)
-- Once all application instances and external readers are verified running on the new version:
-- Drop obsolete columns, constraints, or tables in a separate subsequent deployment.
+Before destructive or compatibility-restricting work:
 
----
+- [ ] Consumer inventory confirms no remaining legacy dependency.
+- [ ] Logs/telemetry show no legacy queries for at least 14 days where observable.
+- [ ] Account for dormant jobs and consumers that telemetry cannot prove retired.
+- [ ] Verified backup exists and restoration has been tested.
+- [ ] Database Owner / Technical Lead explicitly authorizes the change in writing.
+- [ ] Staging validates rollback or forward-fix, including application-version compatibility.
+- [ ] Lock duration, resource budget and execution identity are approved.
 
-## 2. Destructive Migration Safeguards
+## Provider and failure gates
 
-Before any column drop, table rename, or constraint restriction:
-- [ ] Verified backup taken and restoration tested.
-- [ ] Confirmed zero queries referencing the legacy column in logs/telemetry for at least 14 days.
-- [ ] Explicit written authorization from Database Owner / Technical Lead.
-- [ ] Rollback or forward-fix script verified in staging.
+Relational tests use each claimed real engine, not an in-memory substitute.
+MongoDB transaction tests use a replica set or supported sharded deployment.
+Elasticsearch tests cover reindex interruption, alias cutover and stale/deleted records.
+DDL rollback semantics differ by engine; do not assume a transaction undoes migration DDL.
+After timeout or connection loss, inspect migration/state history before retrying.
+Distinguish confirmed commit, confirmed rollback and unknown outcome.
+Replay ambiguous business mutations only through durable idempotency/outcome resolution.
+Outbox delivery and multi-store reconciliation remain required after confirmed commit.
+
+## Release evidence
+
+Record reviewed assets, versions, approvals, test commands/results and recovery rehearsal.
+Document any skipped checks and remaining compatibility or downtime risk.
+Update affected schema/operations guidance in the same authorized change.
+See [provider details](./relational-providers.md) and [transaction standards](../standards/persistence-and-concurrency.md).
+No provider migrations are implemented or certified by the in-memory Items sample.

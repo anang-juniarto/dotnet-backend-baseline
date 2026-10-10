@@ -39,13 +39,16 @@ When a change modifies API contracts, business invariants, configuration, or ope
 ## 3. Verification & Testing
 
 Before requesting review or merging:
-1. Discover and run the repository's applicable validation commands. This non-executable baseline requires documentation/configuration checks, not application builds. In a destination with a verified .NET project, use its build/test commands, for example:
+1. Discover and run the applicable validation commands. Reference assets require documentation/configuration checks. The isolated executable example under [`examples/Baseline.Sample/`](./examples/Baseline.Sample/README.md) additionally requires its documented build/test checks when touched; its passing tests do not certify optional external adapters. In an adopted destination, use that project's verified build/test commands, for example:
    ```bash
    dotnet build
    dotnet test
    ```
 2. For API changes, verify request/response serialization against contract expectations.
-3. Truthful reporting: Explicitly document which tests were executed and passed, and which were omitted (with clear rationale).
+3. The root [baseline validation workflow](./.github/workflows/baseline-validation.yml) defines default Release build/test/format checks and isolated optional-host compile jobs. The nested sample workflow is reference material, not a second active root workflow. A local passing command is not evidence that GitHub Actions executed.
+4. Run default-profile tests independently of optional-profile build outputs. Use separate CI workspaces/jobs; when testing locally, clean/rebuild the default profile before tests after changing build flags. Do not start databases, brokers or exporters merely to validate reference documentation.
+5. Record working directory, SDK, exact command, date, result and excluded coverage in the sample profile or target evidence. Keep fixed test totals out of multiple overview documents. NuGet advisory reporting is not a security enforcement gate unless a failure policy is defined.
+6. Truthful reporting: Explicitly document which tests were executed and passed, and which were omitted (with clear rationale). Adapt or omit source-only example/workflow routes when this document is merged into an adopted destination.
 
 ---
 

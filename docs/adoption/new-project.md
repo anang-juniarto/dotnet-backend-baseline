@@ -1,7 +1,9 @@
 # New Project Adoption Playbook
 
-> **Classification:** `[CORE]`  
-> **Target Context:** Greenfield / New backend .NET repository  
+> **Classification:** `[CORE]`
+> **Status:** Draft | **Owner:** Engineering Leads
+> **Last verified:** Not verified | **Evidence:** Reference adoption workflow; destination execution required
+> **Target Context:** Greenfield / New backend .NET repository
 > **Default Scope:** `core-reference` (`full-reference` is explicit opt-in)
 
 This source-only playbook follows the [canonical lifecycle](./ai-implementation-workflow.md) and [scope manifest](../../BASELINE.md). Neither scope copies `docs/adoption/` or the three adoption commands into a new destination. Keep source guidance intact; adapt destination README/index/manifest links and use `AGENTS.md` section 2 for permanent fallback. Existing files in a scaffolded target require collision/drift checks and preservation; legacy cleanup, if any, requires the lifecycle's exact approvals and pre/post verification.
@@ -10,7 +12,9 @@ This source-only playbook follows the [canonical lifecycle](./ai-implementation-
 
 ## 1. Prerequisites & Preparation
 
-1. Have an empty or newly scaffolded target directory ready (and optionally initialize Git if using version control: `git init`).
+Minimal path: choose `core-reference`, inspect the target, approve an exact ADD/MERGE manifest, apply only that manifest, and verify destination links/configuration. This transfers guidance only. If executable generation is separately approved, start with one WebApi host, Domain/Application and a single small feature; select `none` for persistence when no durable state is needed, or one explicitly approved store. Add only the required test projects and capability assemblies. `full-reference` expands eligible documentation, not the runtime stack; it never imports `examples/**` or enables all modules.
+
+1. Have an empty or newly scaffolded target directory ready. Git initialization requires separate explicit authorization; adoption does not perform it.
 2. Determine the target folder's absolute path (e.g. `C:\Projects\OrderService`).
 3. Ensure the target path is a source directory and not an active deployment environment.
 
@@ -47,24 +51,22 @@ Review the emitted plan. Once confirmed, authorize implementation:
 
 Once the baseline files are copied into the target project, complete the following steps in the target repository:
 
-### Step 3.1: Create Solution & Projects
-Only under separate authorization, create solution/projects with verified SDK options. These illustrative commands are not adoption actions:
-```powershell
-dotnet new sln -n OrderService
-dotnet new webapi -n OrderService.Api -o src/OrderService.Api
-dotnet sln add src/OrderService.Api/OrderService.Api.csproj
-```
+### Step 3.1: Separately Approve Executable Generation
+Reference adoption does not scaffold source. Approve a distinct exact generated-file manifest and dependency/execution decisions before creating projects. Default to .NET 10 (`net10.0`), `src/Core/` Domain/Application with MediatR CQRS feature slices, provider/capability assemblies in `src/Infrastructure/`, and `src/Presentation/` WebApi controllers (optional Grpc). Include `tests/<Project>.UnitTests/`, `tests/<Project>.IntegrationTests/`, and `tests/<Project>.ArchitectureTests/` in the exact generated-file plan. Selected hosts own composition-root wiring; controllers dispatch Application requests through MediatR, not persistence adapters. Use the [greenfield profile](../architecture/net10-baseline-profile.md) as a blueprint, omitting unused abstractions and features.
+
+Record a verified stable SDK, supported package/provider versions, license review and test runner before implementation. MediatR is explicit in this greenfield profile; event sourcing, a separate read database or a datastore is not mandatory. `examples/**`, including `examples/Baseline.Sample`, is excluded from reference transfer; separately approved generation may consult its blueprint but must not recursively copy source examples.
 
 ### Step 3.2: Populate `docs/repository-profile.md`
 Edit `docs/repository-profile.md` with the verified facts established in Step 3.1:
-- Fill in Target Framework (e.g., `net10.0`, `net9.0`).
+- Record the selected .NET 10 SDK/framework for new generation and distinguish proposed settings from verified executable evidence.
 - Record project structure in the approved profile; update `docs/architecture/repository-map.md` only if selected/existing, otherwise use permanent fallback.
-- Record verified build and test commands (`dotnet build`, `dotnet test`).
+- Record exact target-owned build/test/lint commands and executed results, not generic CLI placeholders. For source-example evaluation, the [sample README](../../examples/Baseline.Sample/README.md) owns all five verification profiles and routes; do not copy its commands or paths into the destination.
+- Inspect the target execution root and applicable ancestor `global.json` before changing SDK selection. The sample's `10.0.201` / `latestPatch` / stable-only policy permits patches within `10.0.2xx`, not arbitrary newer SDKs, and does not prove other patches tested. Preserve an existing scaffold's policy until a change is approved.
 
-### Step 3.3: Select Architecture Deliberately
-Do not blindly add Clean Architecture or MediatR unless authorized by design:
-- For simple services: Use Minimal APIs and straightforward service layers.
-- For complex domains: Author an ADR under `docs/adr/` before introducing Clean Architecture, MediatR, or extra project boundaries.
+### Step 3.3: Select Capabilities Independently
+Keep `core-reference | full-reference` separate from runtime selections. Use the [capability matrix](./capability-matrix.md) for optional Sentry, Seq, OpenTelemetry, Elasticsearch, MongoDB, SQL Server, MySQL, PostgreSQL, Redis, RabbitMQ, gRPC, Hangfire, SignalR, chat, notification inbox, web push and mobile push. Select one primary authoritative store or `none`; additional stores need explicit ownership and consistency semantics.
+
+All modules default off. Unselected modules contribute no packages, schema, containers, required settings, health probes, hosted processes or network calls. SignalR does not imply Redis; inbox and external push are independent; chat requires identity and durable history. Select push provider/platform and durable dispatch explicitly; no implicit Firebase account, browser service worker or mobile project. Capability documentation is design guidance, not proof of compatible tested adapters. Resolve unsupported combinations as `DEFER`, not silent package/runtime downgrades.
 
 ---
 

@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Hangfire.AspNetCore">
+      <Version Condition="'$(ManagePackageVersionsCentrally)' != 'true'">1.8.21</Version>
+    </PackageReference>
+    <PackageReference Include="Hangfire.Core">
+      <Version Condition="'$(ManagePackageVersionsCentrally)' != 'true'">1.8.21</Version>
+    </PackageReference>
+    <PackageReference Include="Hangfire.SqlServer">
+      <Version Condition="'$(ManagePackageVersionsCentrally)' != 'true'">1.8.21</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Data.SqlClient">
+      <Version Condition="'$(ManagePackageVersionsCentrally)' != 'true'">6.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version Condition="'$(ManagePackageVersionsCentrally)' != 'true'">13.0.3</Version>
+    </PackageReference>
+  </ItemGroup>
+</Project>

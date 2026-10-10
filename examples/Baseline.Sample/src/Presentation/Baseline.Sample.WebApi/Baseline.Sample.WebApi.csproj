@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <ItemGroup>
+    <ProjectReference Include="../../Core/Baseline.Sample.Application/Baseline.Sample.Application.csproj" />
+    <ProjectReference Include="../../Infrastructure/Baseline.Sample.Persistence.InMemory/Baseline.Sample.Persistence.InMemory.csproj" />
+  </ItemGroup>
+  <PropertyGroup Condition="'$(EnableSqlServer)' == 'true'">
+    <DefineConstants>$(DefineConstants);SAMPLE_SQLSERVER</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(EnablePostgreSql)' == 'true'">
+    <DefineConstants>$(DefineConstants);SAMPLE_POSTGRESQL</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(EnableObservability)' == 'true'">
+    <DefineConstants>$(DefineConstants);SAMPLE_OBSERVABILITY</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(EnableRealtime)' == 'true'">
+    <DefineConstants>$(DefineConstants);SAMPLE_REALTIME</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(EnableSqlServer)' == 'true'">
+    <ProjectReference Include="../../Infrastructure/Baseline.Sample.Persistence.SqlServer/Baseline.Sample.Persistence.SqlServer.csproj" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(EnablePostgreSql)' == 'true'">
+    <ProjectReference Include="../../Infrastructure/Baseline.Sample.Persistence.PostgreSql/Baseline.Sample.Persistence.PostgreSql.csproj" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(EnableObservability)' == 'true'">
+    <ProjectReference Include="../../Infrastructure/Baseline.Sample.Infrastructure.Observability/Baseline.Sample.Infrastructure.Observability.csproj" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(EnableRealtime)' == 'true'">
+    <ProjectReference Include="../Baseline.Sample.Realtime/Baseline.Sample.Realtime.csproj" />
+  </ItemGroup>
+</Project>

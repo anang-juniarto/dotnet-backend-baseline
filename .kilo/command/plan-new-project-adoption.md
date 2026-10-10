@@ -16,6 +16,13 @@ Apply canonical exclusions and root-document/license rules in `BASELINE.md` to s
 
 Normalize source/target roots, reject equality and ancestor/descendant overlap, verify aliases/junctions where possible and block uncertain paths. Do not automatically follow links/reparse points. Check containment/traversal and duplicate mapped destinations. Record each exact file's need, scope basis, source/target state and action; unlisted files cannot transfer. No bulk recursive copy/mirror. Include dependency closure and selected-tree link/anchor checks, pre-write drift/exclusion rechecks and post-write actual-change-to-manifest audit; scope changes or new conflicts require renewed approval. No automatic rollback or destructive cleanup on failure.
 
+## Profile & Capability Decisions
+- Keep reference scope separate from executable selection: `full-reference` enables no runtime integrations. Reference adoption alone creates no application.
+- For separately approved new generation, default to .NET 10 (`net10.0`), src/Core Domain/Application MediatR feature slices, src/Infrastructure provider/capability assemblies, src/Presentation WebApi controllers (optional Grpc), and tests/<Project>.UnitTests, <Project>.IntegrationTests and <Project>.ArchitectureTests. Selected hosts own composition roots. No separate read database, event sourcing or speculative wrappers are required; enumerate exact generated projects, not a fixed four-project scaffold.
+- Use `docs/adoption/capability-matrix.md` and `docs/architecture/optional-stack-catalog.md` for explicit off/selected/deferred choices: Sentry, Seq, OpenTelemetry, Elasticsearch, MongoDB, SQL Server, MySQL, PostgreSQL, Redis, RabbitMQ, gRPC, Hangfire, SignalR, chat, inbox, web push and mobile push. Record store/worker/storage/provider/scale-out dependencies, exact compatibility/license evidence and checks, not blanket support claims.
+- Separate exact reference-import rows from separately approved target-generated/modified rows for every project/package/config/test/local infrastructure artifact. All optional modules default off and omitted modules add no dependencies/settings/services/network calls.
+- Exclude source `examples/**`, including `examples/Baseline.Sample`, from both reference scopes. Reviewed blueprints may inform separately approved generation, never recursive sample source copy. Browser/mobile clients, provider accounts and live device tests require distinct approval.
+
 ## Workflow
 1. **Target Verification (Read-Only)**:
    - Verify the target repository root path is an absolute path.

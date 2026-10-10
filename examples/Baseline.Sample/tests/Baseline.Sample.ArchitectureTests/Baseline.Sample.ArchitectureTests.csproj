@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <IsTestProject>true</IsTestProject>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" PrivateAssets="all" />
+    <PackageReference Include="xunit.v3" PrivateAssets="all" />
+    <PackageReference Include="xunit.runner.visualstudio" PrivateAssets="all" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../src/Core/Baseline.Sample.Domain/Baseline.Sample.Domain.csproj" />
+    <ProjectReference Include="../../src/Core/Baseline.Sample.Application/Baseline.Sample.Application.csproj" />
+    <ProjectReference Include="../../src/Infrastructure/Baseline.Sample.Persistence.InMemory/Baseline.Sample.Persistence.InMemory.csproj" />
+    <ProjectReference Include="../../src/Presentation/Baseline.Sample.WebApi/Baseline.Sample.WebApi.csproj" />
+  </ItemGroup>
+</Project>

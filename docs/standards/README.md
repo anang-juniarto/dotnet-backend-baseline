@@ -4,7 +4,7 @@
 > **Status:** Normative Standard Router  
 > **Applicability:** Portable across enterprise backend systems; C# and .NET-specific rules apply when selected by repository profile.
 
-The enterprise principles in these standards define an applicability-driven target baseline for AI-assisted engineering across modular monoliths, service-oriented architectures, and distributed systems. Technology-specific requirements become active only when the repository has selected that technology through project manifests, existing code, or an accepted Architecture Decision Record (ADR).
+The enterprise principles in these standards define an applicability-driven target baseline for AI-assisted engineering across modular monoliths, service-oriented architectures, and distributed systems. Technology-specific requirements become active when selected through verified target manifests/code, an accepted Architecture Decision Record (ADR), or an approved target profile for separately authorized greenfield generation. A pre-generation selection establishes intended state, not installed packages or certified integrations; isolated examples are not destination-profile evidence.
 
 Root [`AGENTS.md`](../../AGENTS.md) is the always-on operational contract. Standards modules in this directory are **on-demand normative references**; agents and engineers must consult only the specific module matching the task trigger.
 
@@ -61,4 +61,4 @@ Read only the document applicable to your task trigger. Do not load the entire s
 1. **Router-First**: Always start from this router or [`AGENTS.md`](../../AGENTS.md) and jump directly to the target module.
 2. **Lazy-Loading**: Never load all standards into the prompt context simultaneously.
 3. **Cross-Reference by Path**: When passing handoffs between agents, cite `docs/standards/<module>.md#anchor` rather than inlining documentation text.
-4. **Conditional Architecture**: Architectural patterns (Clean Architecture, CQRS, MediatR, Outbox, Distributed Leases) are active ONLY when confirmed in the repository.
+4. **Conditional Architecture**: Apply patterns selected by the approved target profile or verified target repository. Approved greenfield generation follows `AGENTS.md` section 4; existing-project reference adoption and isolated examples do not activate unselected architecture, integrations, or dependencies.

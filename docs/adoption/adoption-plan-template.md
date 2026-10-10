@@ -8,20 +8,38 @@
 
 - **Destination root**: `<verified absolute path distinct from source/deployment; none means no mutation>`
 - **Baseline source root/version/state**: `<absolute path, version, recorded revision/content evidence>`
-- **Mode/scope**: `<new or existing: core-reference by default; full-reference only by explicit choice>`
+- **Adoption mode**: `<new-reference | new-generation | existing-reference (brownfield default) | existing-capabilities | existing-migration; generation/migration requires separate explicit approval>`
+- **Reference scope**: `<core-reference by default; full-reference only by explicit choice; independent of application stack selection>`
 - **Path safety evidence**: `<normalized physical roots; no equality/ancestor overlap; alias/junction resolution; no automatic link/reparse traversal; uncertain paths block writes>`
 - **Mapping audit**: `<source/destination containment, traversal rejection, canonical exclusions on both sides, duplicate destination checks using target filesystem semantics>`
 - **Verified profile**: `<runtime, manifests, solution/projects, architecture, schema ownership; unknowns remain explicit>`
 - **Existing instructions/configuration/worktree**: `<paths, effective settings, unrelated changes to preserve>`
 - **Approved-effective settings**: `<default_agent, compaction, agent/command identifiers including collision renames; preserve existing settings unless explicitly approved>`
 
+### Application Selection & Evidence (Not Runtime Configuration)
+
+Record all choices, including `none/off`, separately from reference imports:
+
+- **Greenfield defaults:** `<.NET 10 stable SDK/net10.0; src/Core Domain/Application; MediatR CQRS Features/<Feature>/Commands|Queries/<UseCase>; src/Infrastructure provider/capability assemblies; src/Presentation WebApi controllers/optional Grpc; host composition roots; tests/<Project>.UnitTests, <Project>.IntegrationTests, <Project>.ArchitectureTests; exact generated projects and approved deviations>`
+- **Brownfield invariants:** `<verified runtime, boundaries, mediator, contracts, schema/job ownership retained; migration scope/contract baselines/cutover/rollback if separately approved>`
+- **Persistence:** `<primary none | sqlserver | mysql | postgresql | mongodb; additional MongoDB role/consistency; Elasticsearch projection/rebuild ownership>`
+- **Infrastructure:** `<Redis cache; RabbitMQ publication recovery/outbox/consumer deduplication; gRPC contract; Hangfire engine and independently selected durable storage; worker separate/in-process/none>`
+- **Observability:** `<Sentry error capture; Seq log route; OpenTelemetry traces/metrics/logs; one delivery/export owner per signal and redaction/outage strategy>`
+- **Realtime:** `<SignalR off/single-node/approved Redis backplane/managed scale-out; affinity/auth/reconnect; chat identity + authoritative durable history>`
+- **Notifications:** `<persistent inbox independently selected; realtime inbox requires inbox + SignalR; web/mobile push separately selected provider/platform; durable intent/attempt store and dispatcher; no implicit RabbitMQ/Hangfire/Firebase>`
+- **Client boundaries:** `<browser service worker/mobile SDK/device/account setup excluded unless separately approved exact artifacts and platform scope>`
+- **Compatibility/evidence:** `<exact SDK/package/provider/server versions, licenses, research date, proposed | verified | unavailable | deferred, executed checks and limitations; no build-only integration certification>`
+- **Disabled-module proof:** `<unselected packages/schema/config/containers/hosted services/health probes/network calls absent>`
+
 ## 2. Permanent Action Manifest
 
 Expand every row to exact source and destination file paths before approval. Filter [canonical exclusions](../../BASELINE.md#universal-exclusions) first on both mappings; renaming cannot bypass them. Directory names/globs are discovery candidates, never bulk recursive copy/mirror authorization. Unlisted files cannot transfer or be changed.
 
-| Action | Source file | Exact destination file | Need / scope basis | Recorded source/target state | Merge/adaptation | Approval/decision |
+| Action | Artifact kind / source or blueprint | Exact destination file | Need / scope basis | Recorded source/target state | Merge/adaptation | Approval/decision |
 |---|---|---|---|---|---|---|
-| `ADD / MERGE / SKIP / CONFLICT / DEFER` | `<exact file or template for approved generation>` | `<absolute file>` | `<concrete need; core or explicit full>` | `<content comparison/hash/revision, absent if new>` | `<preserve custom content; proposed change>` | `<explicit decision>` |
+| `ADD / MERGE / SKIP / CONFLICT / DEFER` | `<reference-import: exact source file; target-generated/modified: reviewed blueprint and selected capability, not copied example>` | `<absolute file>` | `<reference scope or separately approved generation/migration basis>` | `<content comparison/hash/revision, absent if new>` | `<preserve custom content; proposed change>` | `<explicit decision>` |
+
+Keep reference-import rows distinct from executable generation/modification rows, even in one plan. Each generated project, package manifest, configuration, test, local-infrastructure or migration artifact needs its own exact row and execution approval. `examples/**`, including `examples/Baseline.Sample`, is excluded source payload in both scopes; blueprint consultation never authorizes recursive source copying. Do not invent generated migrations or assume optional adapters are tested.
 
 ### Root Documents & License Decisions
 

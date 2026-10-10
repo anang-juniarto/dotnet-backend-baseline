@@ -58,8 +58,17 @@ All maintained Markdown documents under `docs/` SHOULD include a metadata block:
 
 ## 3. Recommended Reading Routes by Task Type
 
+Approved greenfield generation defaults to .NET 10 Clean Architecture/MediatR CQRS, REST controllers, and modular Core/Infrastructure/Presentation provider/capability assemblies. The [canonical selectable schema](./architecture/repository-map.md) is a target blueprint, not implemented-module evidence; MassTransit/RabbitMQ is selected only when messaging is approved. Reference-only brownfield adoption preserves verified runtime/boundaries; selected-capability additions and migration are separate approvals. Reference assets are non-executable; the isolated optional `examples/Baseline.Sample` is a local in-memory demo, not external-stack certification, and `examples/**` is excluded from source transfer.
+
+Select only the 1–2 relevant topics below, not every integration. Draft topic routes are reference design targets; they do not prove installed packages or tested adapters. Adapt destination routes to the actual approved imported tree.
+
 | Task Type | Recommended Reading Sequence |
 |---|---|
+| **Greenfield Architecture / Capability Selection** | 1. [`architecture/net10-baseline-profile.md`](./architecture/net10-baseline-profile.md)<br>2. [`architecture/optional-stack-catalog.md`](./architecture/optional-stack-catalog.md) |
+| **Selected Persistence Provider** | [`data/relational-providers.md`](./data/relational-providers.md), [`data/mongodb.md`](./data/mongodb.md), or [`data/elasticsearch.md`](./data/elasticsearch.md), then schema authority |
+| **Selected gRPC / SignalR** | [`api/grpc.md`](./api/grpc.md) or [`api/signalr.md`](./api/signalr.md), then API contracts |
+| **Chat / Inbox / External Push** | 1. [`engineering/chat-and-notifications.md`](./engineering/chat-and-notifications.md)<br>2. [`operations/push-notifications.md`](./operations/push-notifications.md) only when external push is selected |
+| **Selected Cache / Messaging / Jobs** | [`operations/redis.md`](./operations/redis.md), [`operations/rabbitmq.md`](./operations/rabbitmq.md), or [`operations/hangfire.md`](./operations/hangfire.md) |
 | **Cross-Concern Change Delivery** | 1. [`AGENTS.md`](../AGENTS.md)<br>2. [`engineering/change-delivery-contract.md`](./engineering/change-delivery-contract.md)<br>3. [`collaboration/feature-spec-template.md`](./collaboration/feature-spec-template.md) only when concrete risk, ambiguity, or coordination warrants a separate specification; otherwise use an inline scope/invariants/test strategy |
 | **New Feature Development** | 1. [`AGENTS.md`](../AGENTS.md)<br>2. [`architecture/repository-map.md`](./architecture/repository-map.md)<br>3. [`engineering/how-to-add-feature.md`](./engineering/how-to-add-feature.md)<br>4. [`api/conventions.md`](./api/conventions.md) |
 | **Bug Triaging & Fixes** | 1. [`AGENTS.md`](../AGENTS.md)<br>2. [`operations/runbooks/troubleshooting.md`](./operations/runbooks/troubleshooting.md)<br>3. [`engineering/testing-guide.md`](./engineering/testing-guide.md) |

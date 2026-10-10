@@ -9,7 +9,7 @@
 
 ## 5. Clean Architecture and Dependency Boundaries
 
-**Activation:** Sections 5.1–5.3 define the Clean Architecture profile only where repository evidence or an accepted scoped architecture decision selects it. They do not mandate new layers, projects, repository abstractions, or tactical DDD for every backend. A simpler safe CRUD design may use existing endpoint/service/persistence boundaries. Preserve authorization, invariants, compatibility, testability, and resource safety regardless of architecture; do not migrate a legacy fix merely to activate this profile. Section 5.4 applies wherever its runtime/resource conditions exist.
+**Activation:** Approved greenfield generation defaults to the [.NET 10 Clean Architecture/CQRS profile](../architecture/net10-baseline-profile.md), with controllers, MediatR CQRS feature slices, and the canonical `src/Core`, modular `src/Infrastructure`, and `src/Presentation` assembly layout. Sections 5.1–5.3 otherwise define the Clean Architecture profile only where repository evidence or an accepted scoped architecture decision selects it. They do not mandate new layers, projects, repository abstractions, or tactical DDD for every backend. A simpler safe CRUD design may use existing endpoint/service/persistence boundaries. Preserve authorization, invariants, compatibility, testability, and resource safety regardless of architecture; do not migrate a legacy fix merely to activate this profile. Section 5.4 applies wherever its runtime/resource conditions exist.
 
 ### 5.1 Dependency Topology
 
@@ -19,7 +19,7 @@ Infrastructure ────> Application ──────> Domain
 Composition Root wires Presentation and Infrastructure
 ```
 
-Presentation and Infrastructure are outer adapters. Presentation does not architecturally depend on Infrastructure except through an explicitly documented bootstrap/composition project.
+Presentation and Infrastructure are outer adapters. In approved greenfield generation, the API host is the composition root and may reference Infrastructure strictly for registration/wiring (`Program.cs` and dedicated registration code); no separate bootstrap project is required. Controllers, hubs and gRPC endpoint implementations invoke Application use cases, never concrete Infrastructure. An optional Worker has its own composition root and must not reference API. Preserve a verified existing bootstrap topology during brownfield reference-only adoption.
 
 ### 5.2 Responsibilities
 
@@ -64,6 +64,7 @@ A bounded context/module SHOULD follow its verified repository convention. Mixed
 
 ### 6.2 Requests, Validators, and Handlers
 
+- The greenfield default invokes dedicated typed handlers directly through DI. Preserve an existing mediator; selecting a new one requires package/license review and approval. Do not construct a home-grown generalized mediator/pipeline.
 - Requests contain only use-case input and MUST NOT inherit persistence entities.
 - Contract validation is deterministic and I/O-free unless an explicitly selected validation architecture says otherwise.
 - Existence, authorization state, uniqueness under concurrency, and business invariants belong in the use case/domain, not duplicated validator queries.

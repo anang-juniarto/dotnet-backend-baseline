@@ -1,0 +1,113 @@
+name: Baseline validation
+
+on:
+  pull_request:
+    paths:
+      - 'docs/**'
+      - 'examples/Baseline.Sample/**'
+      - '.github/**'
+      - '.kilo/**'
+      - '*.md'
+      - '.baseline-version'
+      - '.gitignore'
+  push:
+    paths:
+      - 'docs/**'
+      - 'examples/Baseline.Sample/**'
+      - '.github/**'
+      - '.kilo/**'
+      - '*.md'
+      - '.baseline-version'
+      - '.gitignore'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  reference-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Check scoped diff whitespace
+        shell: bash
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          if [[ -z "$BASE_SHA" || "$BASE_SHA" =~ ^0+$ ]]; then
+            BASE_SHA=$(git hash-object -w -t tree --stdin < /dev/null)
+          fi
+          git diff --check "$BASE_SHA" HEAD -- docs examples/Baseline.Sample .github .kilo '*.md' .baseline-version .gitignore
+
+  build-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: examples/Baseline.Sample
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: '1'
+      DOTNET_NOLOGO: 'true'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68
+        with:
+          global-json-file: examples/Baseline.Sample/global.json
+      - name: Log resolved .NET SDK
+        run: |
+          dotnet --version
+          dotnet --info
+      - name: Restore default profile
+        run: dotnet restore Baseline.Sample.slnx
+      - name: Build default profile
+        run: dotnet build Baseline.Sample.slnx --configuration Release --no-restore
+      - name: Test default profile
+        run: dotnet test Baseline.Sample.slnx --configuration Release --no-build --no-restore
+      - name: Verify formatting
+        run: dotnet format Baseline.Sample.slnx --verify-no-changes --no-restore
+
+  optional-host-compile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - profile: sqlserver
+            properties: '-p:EnableSqlServer=true -p:EnablePostgreSql=false -p:EnableObservability=false -p:EnableRealtime=false'
+          - profile: postgresql
+            properties: '-p:EnableSqlServer=false -p:EnablePostgreSql=true -p:EnableObservability=false -p:EnableRealtime=false'
+          - profile: observability
+            properties: '-p:EnableSqlServer=false -p:EnablePostgreSql=false -p:EnableObservability=true -p:EnableRealtime=false'
+          - profile: realtime
+            properties: '-p:EnableSqlServer=false -p:EnablePostgreSql=false -p:EnableObservability=false -p:EnableRealtime=true'
+          - profile: all
+            properties: '-p:EnableSqlServer=true -p:EnablePostgreSql=true -p:EnableObservability=true -p:EnableRealtime=true'
+    name: Optional host compile (${{ matrix.profile }})
+    defaults:
+      run:
+        working-directory: examples/Baseline.Sample
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: '1'
+      DOTNET_NOLOGO: 'true'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68
+        with:
+          global-json-file: examples/Baseline.Sample/global.json
+      - name: Log resolved .NET SDK
+        run: |
+          dotnet --version
+          dotnet --info
+      - name: Restore optional host
+        run: dotnet restore src/Presentation/Baseline.Sample.WebApi/Baseline.Sample.WebApi.csproj ${{ matrix.properties }}
+      - name: Compile optional host
+        run: dotnet build src/Presentation/Baseline.Sample.WebApi/Baseline.Sample.WebApi.csproj --configuration Release --no-restore ${{ matrix.properties }}

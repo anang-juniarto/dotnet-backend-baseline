@@ -2,7 +2,8 @@
 
 > **Baseline Version:** `2.0.0`  
 > **Repository Type:** Portable AI engineering reference baseline  
-> **Executable Application:** No (governance, standards, agent configuration, and blueprints)  
+> **Reference Assets:** Non-executable governance, standards, agent configuration, and blueprints
+> **Optional Executable Example:** `examples/Baseline.Sample` — isolated local in-memory demo; no external stack certified
 > **Adoption Lifecycle:** AI-Assisted Plan $\rightarrow$ Review $\rightarrow$ Implement ([`docs/adoption/ai-implementation-workflow.md`](./docs/adoption/ai-implementation-workflow.md))
 
 ---
@@ -17,7 +18,11 @@ This baseline provides a portable, token-efficient foundation for enterprise bac
 - Coordinated change delivery across Feature, API, Database, Config, and Tests ([`docs/engineering/change-delivery-contract.md`](./docs/engineering/change-delivery-contract.md)).
 - Post-adoption structural indexing via Graphify with on-demand, token-efficient reading ([`docs/operations/graphify.md`](./docs/operations/graphify.md)).
 
-**Explicit Non-Goal:** This baseline does NOT prescribe or assume a specific .NET runtime version, application architecture (Clean Architecture vs. Vertical Slice vs. CRUD), ORM/database, test runner, container orchestrator, cloud provider, or CI vendor. All technology-specific patterns are active ONLY when confirmed by target repository evidence.
+**Greenfield default:** Approved new application generation uses .NET 10 (`net10.0`), Clean Architecture with `Core` (Domain/Application), modular `Infrastructure` provider/capability assemblies, and `Presentation` (WebApi plus separately selected Grpc). Feature-organized CQRS explicitly selects MediatR; REST controllers dispatch through Application, and each host is its composition root. CQRS does not imply event sourcing, separate read/write databases or a broker. The canonical selectable schema follows the user-owned `gemini-code-1791622287764.txt`; it is not an inventory of implemented code. See the [authoritative greenfield profile](./docs/architecture/net10-baseline-profile.md).
+
+**Optional capabilities:** No production datastore, external stack, test runner, cloud, container orchestrator or CI vendor is implicitly selected. The [catalog](./docs/architecture/optional-stack-catalog.md) defines independent choices, including SignalR, durable chat, persistent notification inbox and external web/mobile push. Unselected modules contribute no packages, containers, required options, schemas, hosted services, health probes or network dependencies. Certification requires exact-version restore/build and applicable integration-test evidence; documentation and the local in-memory sample do not certify adapters.
+
+**Brownfield preservation:** Reference-only adoption preserves the discovered supported runtime, architecture, packages and published contracts. Selected-capability implementation is not an architecture migration. Incremental .NET 10/Clean Architecture/CQRS migration needs separate scope and approval. Missing optional profile documents use permanent discovery fallback; they do not trigger scaffolding or block work.
 
 ---
 
@@ -42,7 +47,7 @@ Follow the source [implementation lifecycle](./docs/adoption/ai-implementation-w
 ### Universal Exclusions
 Neither scope imports the following source payloads. Apply exclusions to both source paths and mapped destination paths before approval and again before execution; renaming cannot bypass an exclusion:
 - Git metadata: any `.git` file or directory, including nested repositories and worktree pointer files.
-- Source-only adoption assets listed above and `.kilo/plans/`.
+- Source-only adoption assets listed above, `.kilo/plans/`, and `examples/**` (including the optional executable demo).
 - `.kilo/agent-manager.json`, `.kilo/worktrees/`, `.kilo/cache/`, `.kilo/generated/`.
 - Build/cache outputs: `**/bin/`, `**/obj/`, `**/TestResults/`, `**/coverage/`, `**/artifacts/`, `node_modules/` at any depth, and `*.zip` at any depth.
 - Deferred contract fixtures: `docs/api/endpoints/`, `docs/api/examples/`, `docs/api/postman/collections/`, `docs/assets/diagrams/`.

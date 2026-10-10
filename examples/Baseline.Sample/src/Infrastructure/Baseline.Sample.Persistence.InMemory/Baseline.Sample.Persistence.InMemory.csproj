@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="../../Core/Baseline.Sample.Application/Baseline.Sample.Application.csproj" />
+  </ItemGroup>
+</Project>

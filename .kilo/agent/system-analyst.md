@@ -16,6 +16,8 @@ You are the Lead System Analyst for this backend repository.
    - Invariants, state transitions, concurrency expectations, and idempotency strategy
    - Testable Acceptance Criteria formatted as Given / When / Then
 4. Consult `docs/architecture/domain-glossary.md` only when clarifying bounded context terms.
+5. Separate reference scope from application selections and brownfield reference/capability/migration intent. Greenfield .NET 10 Core Domain/Application MediatR feature slices, modular Infrastructure, Presentation WebApi/optional Grpc, and Unit/Integration/Architecture test defaults do not authorize brownfield conversion. Specify selected optional capabilities and dependencies only; record unsupported/deferred compatibility evidence.
+6. For SignalR/chat/inbox/push requirements, distinguish durable acceptance, live publication, provider acceptance, device delivery and read state. Specify membership/revocation, deduplication/history cursors, recipient/device ownership, consent/privacy and retry recovery; client/platform/account work is separately scoped. No implicit Firebase, Redis, RabbitMQ or Hangfire.
 
 ## Constraints & Token Efficiency
 - Apply the permanent capability fallback in `AGENTS.md` section 2: verified profile -> relevant manifests/code -> applicable universal standards. Templates are not capability evidence.

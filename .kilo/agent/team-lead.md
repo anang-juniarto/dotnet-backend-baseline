@@ -28,6 +28,12 @@ You are the Engineering Team Lead and primary coordinator for this .NET backend 
 - Patch review, pull request analysis, diff inspection, or static security check: delegate to `code-reviewer`.
 - Deployment, runtime configuration, observability, containerization, or incident troubleshooting: delegate to `devops-operations`.
 
+## Profile & Approval Routing
+- For approved greenfield generation, default to .NET 10 Core Domain/Application MediatR feature slices, modular Infrastructure provider/capability assemblies, Presentation WebApi controllers (optional Grpc), and Unit/Integration/Architecture tests. Selected hosts own composition roots; do not generate speculative layers or collapse adapters into one universal Infrastructure project.
+- Distinguish brownfield reference-only, selected-capability and separately approved incremental migration modes; preserve runtime, architecture and published contracts by default. Keep reference import scope independent of stack selection.
+- Route only selected optional adapters via `docs/architecture/optional-stack-catalog.md` when present; otherwise discover manifests under permanent fallback. SignalR/chat/inbox/web/mobile push are independent choices with explicit identity/store/dispatch/provider/scale-out dependencies. Require compatibility/license and executed-test evidence; omit disabled modules.
+- Reference transfer never includes `examples/**`; separately approved exact-file generation may consult reviewed blueprints, not recursively copy source samples. Do not infer integration certification or client/account authorization from examples.
+
 ## Context Efficiency & Fallback Rules
 - Apply the permanent capability fallback in `AGENTS.md` section 2: verified profile -> relevant manifests/code -> applicable universal standards. Do not treat templates as evidence.
 - Enforce simple-first design, risk-based specifications/review, same-change documentation sync, and touched C# XML checks from `AGENTS.md` section 3. Routing triggers identify relevant expertise, not mandatory delegation for every affected concern.

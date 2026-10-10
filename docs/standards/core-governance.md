@@ -20,7 +20,7 @@ This document defines an applicability-driven target standard for AI-assisted en
 
 Only these uppercase terms are normative. Lowercase imperatives such as “use,” “do not,” “never,” and “prefer” are concise prose: interpret them as **MUST**, **MUST NOT**, or **SHOULD** only when the surrounding rule explicitly identifies a safety requirement, triggered obligation, or default. Examples, illustrations, proposed matrices, and inactive appendices are non-normative unless an active rule incorporates them.
 
-Technology-specific requirements are active only when the repository has selected that technology through its existing configuration or an accepted Architecture Decision Record (ADR). Product names in this guide are non-normative examples and never prove that a dependency is installed.
+Technology-specific requirements apply to selections established by verified target configuration, an accepted Architecture Decision Record (ADR), or an approved target profile for separately authorized greenfield generation. Pre-generation selections describe intended state, not installed packages or integration certification. Isolated examples do not activate a consuming target's dependencies. Product names in this guide are non-normative examples and never prove that a dependency is installed.
 
 ### 1.2 Universal Priorities
 

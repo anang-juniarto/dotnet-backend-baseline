@@ -9,7 +9,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Explicit .NET 10 Clean Architecture/CQRS greenfield profile and independently selectable integration catalog, including telemetry, persistence, caching, messaging, gRPC, jobs, SignalR chat, notification inbox, and web/mobile push design guidance.
+- Isolated `examples/Baseline.Sample` core demonstration with local in-memory persistence; external integrations and durable chat/notification behavior are not certified by this sample.
+- Root baseline validation workflow plus profile-isolation regression checks for default dependencies, disabled observability registration, and realtime authorization boundaries.
+
 ### Changed
+- Separated HTTP CreateItemRequest DTO from Application commands under Presentation Contracts to protect server-resolved actor identity, aligned transport validation with normalized Application/Domain name length invariants, added CI SDK diagnostic logging, and completed exact-invocation evidence recording.
+- Optimized sample onboarding with five source-verified local profiles, explicit build-versus-runtime selection, evidence tiers, `latestPatch` SDK policy bounded to the verified 10.0.201 feature band, and consistent shared/provider EF scanning guidance.
+- Extracted shared and provider-specific EF mappings into `IEntityTypeConfiguration<T>` classes under persistence `Configurations/`, mapped Domain entities directly without duplicate persistence entities, and kept contexts limited to ordered registration. Business entities remain EF-free in Domain.
+- Aligned the .NET 10 greenfield blueprint and executable example with the user-designated Core/Infrastructure/Presentation modular schema, explicit MediatR CQRS, selected capability assemblies and categorized tests; retained brownfield compatibility and optional deployment decisions.
+- Kept reference adoption separate from executable example generation and excluded `examples/**` from baseline transfer payloads.
+- Distinguished reference-only adoption, selected capability additions, and separately scoped runtime/architecture migration for existing projects.
 - Defaulted both new and existing adoption to `core-reference`; `full-reference` remains explicit opt-in with exact-file approval, never bulk recursive copy/mirror.
 - Centralized source/destination exclusions including Git metadata and plans, root-document/license preservation and MIT attribution; distinguished source import from later authorized target generation.
 - Required normalized non-overlapping roots, containment/duplicate/drift checks, selected-tree dependency validation and actual-change-to-manifest audits. Older plans require re-review; no automatic target migration or cleanup.

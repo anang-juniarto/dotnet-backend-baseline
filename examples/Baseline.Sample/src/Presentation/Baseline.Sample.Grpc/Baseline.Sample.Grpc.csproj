@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore" />
+    <ProjectReference Include="../../Core/Baseline.Sample.Application/Baseline.Sample.Application.csproj" />
+    <ProjectReference Include="../../Infrastructure/Baseline.Sample.Persistence.InMemory/Baseline.Sample.Persistence.InMemory.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Protobuf Include="Protos/items.proto" GrpcServices="Server" />
+  </ItemGroup>
+</Project>

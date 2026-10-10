@@ -3,7 +3,7 @@
 > **Document Metadata**:  
 > `Status: Draft` | `Owner: System Architect / Core Team` | `Last verified: Not verified` | `Evidence: Initial system blueprint`
 
-This document defines the high-level architecture, system context, and structural boundaries of the backend system.
+This is a reference blueprint, not a verified deployed system. Approved greenfield generation defaults to the [.NET 10 Clean Architecture/CQRS profile](./net10-baseline-profile.md): REST controllers and MediatR CQRS, Core Domain/Application, modular Infrastructure provider/capability assemblies, and Presentation WebApi plus separately selected Grpc hosts. Each host owns composition-root wiring; only approved adapters are selected. The [canonical selectable schema](./repository-map.md) is a blueprint, not an implemented-module inventory. Brownfield reference-only adoption preserves discovered runtime, boundaries and contracts; capability additions and migrations need separate approval. The isolated optional `examples/Baseline.Sample` is a local in-memory demo, not external-integration certification.
 
 ---
 
@@ -22,7 +22,8 @@ The backend service serves as the core business logic engine, data authority, an
 ```
 
 - **Upstream Consumers**: Single Page Applications (Angular/React), Mobile Clients, Third-Party Webhooks.
-- **Downstream Dependencies**: Primary Database, Distributed Cache, Message Broker, External APIs.
+- **Downstream Dependencies**: Only approved selected stores/adapters; the diagram is illustrative, not a mandatory topology. A stateless service is valid.
+- **Optional Capabilities**: Select independently from the [catalog](./optional-stack-catalog.md). SignalR transport, durable chat, notification inbox and external push have distinct roles; no mandatory Redis/Firebase/RabbitMQ/Hangfire stack follows from them.
 
 ---
 
@@ -38,8 +39,9 @@ Architectural changes MUST distinguish between three distinct states:
 ## 3. Core Boundaries & Consistency
 
 - **Consistency Boundaries**: Each aggregate or bounded context enforces internal invariants transactionally.
-- **Cross-Service Communication**: Asynchronous messaging with transactional outbox for durable eventual consistency.
-- **Tenant Boundaries**: Tenant context is resolved from trusted claims and enforced across database queries, cache partitions, and audit trails.
+- **Cross-Service Communication**: Select synchronous or asynchronous transport for actual requirements. Business-required recoverable publication uses durable intent/outbox where supported and idempotent consumers; no cross-store atomicity or exactly-once promise.
+- **Tenant Boundaries**: When tenancy is selected, resolve context from trusted identity and enforce it across queries, cache partitions, messages and audit trails.
+- **Realtime and Notifications**: Persist durable chat/inbox state before acceptance, separate send/receipt/read states, and recover through authorized history/inbox queries. Push providers are delivery adapters, not the system of record.
 
 ---
 

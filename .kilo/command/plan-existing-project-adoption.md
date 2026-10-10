@@ -18,6 +18,12 @@ Normalize source/target roots; reject equality and ancestor/descendant overlap, 
 
 Record README/CHANGELOG preservation, optional target-compatible CONTRIBUTING merge, and adapted BASELINE/index routes. Read LICENSE; approve an exact attribution location retaining the full MIT notice while preserving the target root license and application licensing. Unresolved attribution is `CONFLICT`/`DEFER` before related transfer.
 
+## Mode & Capability Decisions
+- Choose `existing-reference` by default (guidance only), `existing-capabilities` (explicit adapters within verified boundaries), or `existing-migration` (separate incremental runtime/architecture approval). Reference scope `core-reference | full-reference` is independent of stack selection.
+- .NET 10 Core Domain/Application MediatR feature slices, modular Infrastructure provider/capability assemblies, Presentation WebApi controllers (optional Grpc), and Unit/Integration/Architecture tests are greenfield defaults, not brownfield conversion permission. Preserve current runtime, mediator, Minimal APIs/CRUD boundaries, contracts, schemas, job payloads and deployment unless a migration explicitly approves changes with contract baselines, feasibility, cutover/rollback and staged seams.
+- Discover existing integrations before selecting any from `docs/adoption/capability-matrix.md` and `docs/architecture/optional-stack-catalog.md`, including independent SignalR/chat/inbox/web/mobile push. No duplicate systems, implicit Firebase/Redis/RabbitMQ/Hangfire or silent provider/runtime downgrade. Record exact version/license compatibility, proposed versus tested evidence and deferred combinations.
+- Separate exact reference-import rows from executable generated/modified rows and execution approvals. Source `examples/**`, including `examples/Baseline.Sample`, never transfers in either reference scope; reviewed blueprint use is allowed only for separately approved generation, not recursive source copying. Client/mobile/provider-account work remains distinct scope.
+
 ## Workflow
 1. **Target Verification & Pre-Flight (Read-Only)**:
    - Verify the target repository root path is an absolute path.
